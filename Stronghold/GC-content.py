@@ -1,16 +1,19 @@
 from Bio import SeqIO
 
 #Add path to FASTA file here
-fa = "/Users/kylefletcher/Downloads/rosalind_gc.txt"
+fa = "..."
 
-fasta_dict = SeqIO.to_dict(SeqIO.parse(fa, "fasta"))
+#Can read fasta file directly into the loop
 gc_results = {}
-for name, record in fasta_dict.items():
-    seq = record.seq
+for record in SeqIO.parse(fa, "fasta"):
+    name = record.id
+    seq = str(record.seq)
     gc_content = (seq.count('G') + seq.count('C'))/len(seq) * 100
     gc_results[name] = gc_content
 
-#Print ID
-print(max(gc_results, key=gc_results.get))
-#Print value
-print(max(gc_results.values()))
+#Obtain best id and then use that to query the dictionary
+best_id = (max(gc_results, key=gc_results.get))
+best_gc = gc_results[best_id]
+
+print(best_id)
+print(best_gc)
